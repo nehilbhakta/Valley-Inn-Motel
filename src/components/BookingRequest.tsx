@@ -24,20 +24,15 @@ export const useBooking = () => useContext(BookingContext);
 
 export function BookingProvider({ motel, children }: { motel: Motel; children: React.ReactNode }) {
   const [prefill, setPrefill] = useState<BookingPrefill | null>(null);
-  // Until the EmailJS keys are filled in, there is no online form to open:
-  // the booking bar and room buttons fall back to call-to-book instead of
-  // letting a guest fill in a form that can only end in "call us".
-  const keys = motel.emailjs;
-  const configured =
-    keys !== null && Object.values(keys).every((v) => v && !v.startsWith("PASTE_"));
-  const value: Booking = configured
-    ? {
-        open: (p = {}) => {
-          setPrefill({ ...p, roomId: p.roomId ?? motel.rooms[0].id });
-          track("booking_form_open", { room: p.roomId ?? "any" });
-        },
-      }
-    : null;
+  // The form is always offered. If the EmailJS keys are not filled in yet,
+  // submitting shows a prepared request with an email/call fallback instead
+  // of a dead end — the guest can still see and send their request.
+  const value: Booking = {
+    open: (p = {}) => {
+      setPrefill({ ...p, roomId: p.roomId ?? motel.rooms[0].id });
+      track("booking_form_open", { room: p.roomId ?? "any" });
+    },
+  };
 
   return (
     <BookingContext.Provider value={value}>
@@ -56,6 +51,7 @@ function RequestDialog({ motel, prefill, onClose }: { motel: Motel; prefill: Boo
   const [errors, setErrors] = useState<Errors>({});
   const [sending, setSending] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
+  const [prepared, setPrepared] = useState<Record<string, string> | null>(null);
   const today = localToday();
 
   useEffect(() => {
@@ -106,8 +102,10 @@ function RequestDialog({ motel, prefill, onClose }: { motel: Motel; prefill: Boo
     const keys = motel.emailjs;
     const configured = keys !== null && Object.values(keys).every((v) => v && !v.startsWith("PASTE_"));
     if (!configured) {
+      // No EmailJS keys yet: do not pretend an email was sent. Show the
+      // guest their prepared request with an email + call fallback.
       console.warn("Booking emails are off: add the EmailJS keys in src/data/motel.ts");
-      setErrors({ form: `Online booking isn't available yet. Call us at ${motel.phone.display} to reserve your room.` });
+      setPrepared(params);
       return;
     }
     setSending(true);
@@ -136,7 +134,34 @@ function RequestDialog({ motel, prefill, onClose }: { motel: Motel; prefill: Boo
         <span className="visually-hidden">Close</span>
       </button>
 
-      {sentTo ? (
+      {prepared ? (
+        <div className={styles.done} role="status">
+          <h2 id="request-title">Your request is ready</h2>
+          <p>
+            Online email booking isn&apos;t set up yet, so this request has{" "}
+            <strong>not been emailed automatically</strong>. Send it with the
+            button below, or call the front desk to confirm it.
+          </p>
+          <p className={styles.notice}>
+            <strong>Your reservation is not confirmed yet.</strong> {prepared.room_type} for{" "}
+            {prepared.guests}, {prepared.checkin} to {prepared.checkout} ({prepared.nights}{" "}
+            night{prepared.nights === "1" ? "" : "s"}), {prepared.special_requests !== "None" ? prepared.special_requests : "no special requests"}.
+          </p>
+          <div className={styles.doneActions}>
+            <a
+              href={`mailto:${motel.email}?subject=${encodeURIComponent(`Reservation request: ${prepared.room_type}, ${prepared.checkin} to ${prepared.checkout}`)}&body=${encodeURIComponent(
+                `Name: ${prepared.guest_name}\nEmail: ${prepared.guest_email}\nPhone: ${prepared.guest_phone}\nRoom: ${prepared.room_type}\nGuests: ${prepared.guests}\nCheck-in: ${prepared.checkin}\nCheck-out: ${prepared.checkout}\nNights: ${prepared.nights}\nSpecial requests: ${prepared.special_requests}`
+              )}`}
+              className="btn btn-primary"
+            >
+              Email this request
+            </a>
+            <a href={`tel:${motel.phone.tel}`} className="btn btn-outline">
+              <Phone aria-hidden /> Call to confirm
+            </a>
+          </div>
+        </div>
+      ) : sentTo ? (
         <div className={styles.done} role="status">
           <h2 id="request-title">Reservation request sent</h2>
           <p>

@@ -56,9 +56,10 @@ Edit `src/data/motel.ts`. Lines marked `TODO` still need the real details:
 
 The booking form sends a confirmation email to the guest and a booking alert to the motel through
 EmailJS. Ready-made templates and step-by-step setup are in [`email-templates/`](email-templates/README.md).
-Until the four EmailJS keys in `motel.ts` are filled in, the site shows call-to-book instead:
-the booking bar becomes a "Book direct with the front desk" call panel, and the Reserve buttons
-become Call buttons — so a guest is never led through a form that can only end in "call us".
+Until the four EmailJS keys in `motel.ts` are filled in, the availability bar and reservation
+form are still visible, but submitting shows a prepared request with an "Email this request"
+(mailto) button and a call-to-confirm button instead of pretending an email was sent.
+Once the keys are filled in, submitting emails the guest and the motel automatically.
 
 ## What's on the page
 

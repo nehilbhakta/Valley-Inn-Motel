@@ -133,3 +133,10 @@
     width: 100%;
   }
 }
+
+.barTitle {
+  margin: 0 0 14px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--navy);
+}

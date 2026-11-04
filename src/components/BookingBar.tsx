@@ -43,7 +43,7 @@ function AvailabilityBar({ motel, open }: { motel: Motel; open: NonNullable<Retu
 
   return (
     <section id="rate-sign" className={styles.bar} aria-labelledby="booking-bar-title">
-      <h2 id="booking-bar-title" className="visually-hidden">
+      <h2 id="booking-bar-title" className={styles.barTitle}>
         Check availability
       </h2>
       <form onSubmit={submit} noValidate className={styles.fields}>
