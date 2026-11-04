@@ -15,6 +15,7 @@ export function Rooms({ motel }: { motel: Motel }) {
     <section id="rooms" className={`section ${styles.section}`} aria-labelledby="rooms-title">
       <div className="container">
         <div className="section-intro">
+          <p className="eyebrow">Rooms &amp; rates</p>
           <h2 id="rooms-title">Two room types, both with the basics covered</h2>
           <p>Every room has free Wi-Fi, a flat-screen TV, a microwave and a refrigerator.</p>
         </div>

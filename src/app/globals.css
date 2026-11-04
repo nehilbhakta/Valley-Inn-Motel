@@ -125,6 +125,24 @@ button {
   padding-block: clamp(64px, 9vw, 112px);
 }
 
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sky);
+}
+
+.btn-light {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-light:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
 .section-intro {
   max-width: 62ch;
   margin-bottom: clamp(28px, 4vw, 44px);

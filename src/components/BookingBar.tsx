@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CalendarCheck, Phone } from "lucide-react";
 import type { Motel } from "@/data/types";
 import { track } from "@/lib/analytics";
+import { localAddDays, localToday } from "@/lib/site";
 import { useBooking } from "./BookingRequest";
 import styles from "./BookingBar.module.css";
 
@@ -20,7 +21,7 @@ function AvailabilityBar({ motel, open }: { motel: Motel; open: NonNullable<Retu
   const [checkout, setCheckout] = useState("");
   const [guests, setGuests] = useState(2);
   const [error, setError] = useState("");
-  const today = new Date().toISOString().split("T")[0];
+  const today = localToday();
   const maxGuests = Math.max(...motel.rooms.map((r) => r.sleeps));
 
   function onCheckin(value: string) {
@@ -121,7 +122,5 @@ function CallOnlyBar({ motel }: { motel: Motel }) {
 }
 
 function addDays(iso: string, days: number) {
-  const d = new Date(`${iso}T12:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().split("T")[0];
+  return localAddDays(iso, days);
 }

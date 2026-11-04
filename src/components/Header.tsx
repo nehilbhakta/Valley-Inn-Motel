@@ -12,6 +12,7 @@ const links = [
   { href: "#rooms", label: "Rooms" },
   { href: "#photos", label: "Photos" },
   { href: "#location", label: "Location" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 export function Header({ motel }: { motel: Motel }) {

@@ -14,7 +14,7 @@ export function BookDirect({ motel }: { motel: Motel }) {
       <div className={`container ${styles.inner}`}>
         <div>
           <h2 id="contact-title">Book direct with the front desk</h2>
-          <p>Call for today&rsquo;s rates and availability. Booking direct means no third-party fees.</p>
+          <p>Call for today&rsquo;s rates and availability. Booking direct means no third-party fees. Check-in {motel.checkIn}, check-out {motel.checkOut}.</p>
         </div>
         <div className={styles.actions}>
           <a

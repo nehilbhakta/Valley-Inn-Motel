@@ -56,7 +56,17 @@ Edit `src/data/motel.ts`. Lines marked `TODO` still need the real details:
 
 The booking form sends a confirmation email to the guest and a booking alert to the motel through
 EmailJS. Ready-made templates and step-by-step setup are in [`email-templates/`](email-templates/README.md).
-The form stays hidden until the four EmailJS keys in `motel.ts` are filled in.
+Until the four EmailJS keys in `motel.ts` are filled in, the site shows call-to-book instead:
+the booking bar becomes a "Book direct with the front desk" call panel, and the Reserve buttons
+become Call buttons — so a guest is never led through a form that can only end in "call us".
+
+## What's on the page
+
+Hero slideshow with a "Rooms from $X/night" pill and call button, amenities strip, room cards
+with prices, a navy "Book direct" strip, photo gallery with lightbox, welcome section with
+check-in/check-out times, map and nearby places, a "Good to know" section, an FAQ, and a
+book-direct band. Dates in the booking bar use the visitor's local date, not UTC, so
+same-day bookings are not blocked after 5 PM Phoenix time.
 
 ## Publish
 

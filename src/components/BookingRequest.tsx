@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Phone, X } from "lucide-react";
 import type { Motel } from "@/data/types";
-import { formatPrice } from "@/lib/site";
+import { formatPrice, localToday } from "@/lib/site";
 import { track } from "@/lib/analytics";
 import styles from "./BookingRequest.module.css";
 
@@ -24,12 +24,20 @@ export const useBooking = () => useContext(BookingContext);
 
 export function BookingProvider({ motel, children }: { motel: Motel; children: React.ReactNode }) {
   const [prefill, setPrefill] = useState<BookingPrefill | null>(null);
-  const value: Booking = {
-    open: (p = {}) => {
-      setPrefill({ ...p, roomId: p.roomId ?? motel.rooms[0].id });
-      track("booking_form_open", { room: p.roomId ?? "any" });
-    },
-  };
+  // Until the EmailJS keys are filled in, there is no online form to open:
+  // the booking bar and room buttons fall back to call-to-book instead of
+  // letting a guest fill in a form that can only end in "call us".
+  const keys = motel.emailjs;
+  const configured =
+    keys !== null && Object.values(keys).every((v) => v && !v.startsWith("PASTE_"));
+  const value: Booking = configured
+    ? {
+        open: (p = {}) => {
+          setPrefill({ ...p, roomId: p.roomId ?? motel.rooms[0].id });
+          track("booking_form_open", { room: p.roomId ?? "any" });
+        },
+      }
+    : null;
 
   return (
     <BookingContext.Provider value={value}>
@@ -48,7 +56,7 @@ function RequestDialog({ motel, prefill, onClose }: { motel: Motel; prefill: Boo
   const [errors, setErrors] = useState<Errors>({});
   const [sending, setSending] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
-  const today = new Date().toISOString().split("T")[0];
+  const today = localToday();
 
   useEffect(() => {
     ref.current?.showModal();

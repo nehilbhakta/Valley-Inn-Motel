@@ -30,6 +30,8 @@ export function Footer({ motel }: { motel: Motel }) {
           <a href="#rooms">Rooms and rates</a>
           <a href="#photos">Photos</a>
           <a href="#location">Location</a>
+          <a href="#good-to-know">Good to know</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Book direct</a>
         </nav>
       </div>

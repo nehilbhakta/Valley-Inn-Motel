@@ -10,6 +10,7 @@ export function Location({ motel }: { motel: Motel }) {
     <section id="location" className={`section ${styles.location}`} aria-labelledby="location-title">
       <div className={`container ${styles.inner}`}>
         <div>
+          <p className="eyebrow">Location</p>
           <h2 id="location-title">Close to downtown and the airport</h2>
           {address && <p className={styles.address}>{address}</p>}
           <p className={styles.lead}>A short drive to:</p>

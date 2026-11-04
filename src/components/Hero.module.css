@@ -76,6 +76,25 @@
   color: var(--white);
 }
 
+.ctaRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.pricePill {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--sun);
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 0.9375rem;
+}
+
 .copy p {
   margin-top: 16px;
   max-width: 32rem;

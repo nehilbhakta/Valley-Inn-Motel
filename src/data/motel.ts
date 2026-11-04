@@ -13,7 +13,7 @@ export const motel: Motel = {
   phone: { display: "(602) 756-0213", tel: "+16027560213" },
   email: "valleyinndowntownphoenix@gmail.com",
   address: { street: "965 E Van Buren St", city: "Phoenix", state: "AZ", zip: "85006" },
-  geo: null, // optional: { lat: ..., lng: ... }
+  geo: { lat: 33.45094, lng: -112.05949 }, // 965 E Van Buren St, Phoenix
   mapsUrl: null, // optional: short Google Maps link. Without it, directions search the address.
   checkIn: "3:00 PM",
   checkOut: "11:00 AM",

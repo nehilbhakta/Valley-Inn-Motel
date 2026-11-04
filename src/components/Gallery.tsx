@@ -19,6 +19,7 @@ export function Gallery({ motel }: { motel: Motel }) {
       <div className="container">
         <div className={styles.head}>
           <div className="section-intro">
+            <p className="eyebrow">Photos</p>
             <h2 id="photos-title">See the rooms and property</h2>
             <p>The lobby, rooms, bathrooms and parking. Tap any photo to see it larger.</p>
           </div>
