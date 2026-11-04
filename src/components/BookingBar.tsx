@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarCheck, Phone } from "lucide-react";
+import { Calendar, CalendarCheck, Phone } from "lucide-react";
 import type { Motel } from "@/data/types";
 import { track } from "@/lib/analytics";
 import { localAddDays, localToday } from "@/lib/site";
@@ -51,28 +51,44 @@ function AvailabilityBar({ motel, open }: { motel: Motel; open: NonNullable<Retu
       <form onSubmit={submit} noValidate className={styles.fields}>
         <label className={styles.field}>
           <span>Check-in</span>
-          <input
-            type="date"
-            min={today}
-            value={checkin}
-            onChange={(e) => onCheckin(e.target.value)}
-            aria-invalid={!!error}
-            aria-describedby="avail-error"
-          />
+          <span className={styles.dateWrap}>
+            <span className={styles.dateDisplay} aria-hidden="true">
+              {formatDate(checkin)}
+              <Calendar aria-hidden="true" />
+            </span>
+            <input
+              className={styles.dateInput}
+              type="date"
+              min={today}
+              value={checkin}
+              onChange={(e) => onCheckin(e.target.value)}
+              aria-label="Check-in date"
+              aria-invalid={!!error}
+              aria-describedby="avail-error"
+            />
+          </span>
         </label>
         <label className={styles.field}>
           <span>Check-out</span>
-          <input
-            type="date"
-            min={checkin ? addDays(checkin, 1) : today}
-            value={checkout}
-            onChange={(e) => {
-              setCheckout(e.target.value);
-              setError("");
-            }}
-            aria-invalid={!!error}
-            aria-describedby="avail-error"
-          />
+          <span className={styles.dateWrap}>
+            <span className={styles.dateDisplay} aria-hidden="true">
+              {formatDate(checkout)}
+              <Calendar aria-hidden="true" />
+            </span>
+            <input
+              className={styles.dateInput}
+              type="date"
+              min={checkin ? addDays(checkin, 1) : today}
+              value={checkout}
+              onChange={(e) => {
+                setCheckout(e.target.value);
+                setError("");
+              }}
+              aria-label="Check-out date"
+              aria-invalid={!!error}
+              aria-describedby="avail-error"
+            />
+          </span>
         </label>
         <label className={`${styles.field} ${styles.guests}`}>
           <span>Guests</span>
@@ -93,7 +109,7 @@ function AvailabilityBar({ motel, open }: { motel: Motel; open: NonNullable<Retu
       </p>
       {checkin && checkout && checkout > checkin ? (
         <p className={styles.summary}>
-          {checkin} → {checkout} · {nights(checkin, checkout)} {nights(checkin, checkout) === 1 ? "night" : "nights"} · {guests}{" "}
+          {formatDate(checkin)} → {formatDate(checkout)} · {nights(checkin, checkout)} {nights(checkin, checkout) === 1 ? "night" : "nights"} · {guests}{" "}
           {guests === 1 ? "guest" : "guests"}
         </p>
       ) : null}
@@ -127,6 +143,13 @@ function CallOnlyBar({ motel }: { motel: Motel }) {
       </a>
     </section>
   );
+}
+
+// "2026-11-04" -> "Nov 4, 2026", parsed as calendar parts (no timezone shift)
+function formatDate(iso: string) {
+  if (!iso) return "Choose a date";
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 function addDays(iso: string, days: number) {
