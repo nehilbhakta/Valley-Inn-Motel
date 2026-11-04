@@ -17,8 +17,10 @@ export function BookingBar({ motel }: { motel: Motel }) {
 }
 
 function AvailabilityBar({ motel, open }: { motel: Motel; open: NonNullable<ReturnType<typeof useBooking>>["open"] }) {
-  const [checkin, setCheckin] = useState("");
-  const [checkout, setCheckout] = useState("");
+  // Prefill with tonight/tomorrow so the date boxes are never blank
+  // (an empty iOS date input shows nothing at all, which looked broken).
+  const [checkin, setCheckin] = useState(localToday());
+  const [checkout, setCheckout] = useState(localAddDays(localToday(), 1));
   const [guests, setGuests] = useState(2);
   const [error, setError] = useState("");
   const today = localToday();
