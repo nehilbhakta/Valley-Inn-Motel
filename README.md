@@ -64,8 +64,9 @@ Once the keys are filled in, submitting emails the guest and the motel automatic
 ## What's on the page
 
 Hero slideshow with a "Rooms from $X/night" pill and call button, amenities strip, room cards
-with prices, a navy "Book direct" strip, photo gallery with lightbox, welcome section with
-check-in/check-out times, map and nearby places, a "Good to know" section, an FAQ, and a
+with prices, photo gallery with lightbox, welcome section with
+check-in/check-out times, map and nearby places, a single "Good to know" at-a-glance panel
+(the earlier navy book-direct card strip was removed because it duplicated it), an FAQ, and a
 book-direct band. Dates in the booking bar use the visitor's local date, not UTC, so
 same-day bookings are not blocked after 5 PM Phoenix time.
 

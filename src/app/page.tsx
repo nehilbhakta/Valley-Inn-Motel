@@ -4,7 +4,6 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Amenities } from "@/components/Amenities";
 import { Rooms } from "@/components/Rooms";
-import { WhyBook } from "@/components/WhyBook";
 import { Gallery } from "@/components/Gallery";
 import { Welcome } from "@/components/Welcome";
 import { Location } from "@/components/Location";
@@ -22,7 +21,6 @@ export default function Home() {
         <Hero motel={motel} />
         <Amenities motel={motel} />
         <Rooms motel={motel} />
-        <WhyBook motel={motel} />
         <Gallery motel={motel} />
         <Welcome motel={motel} />
         <Location motel={motel} />

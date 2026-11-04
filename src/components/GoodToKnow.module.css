@@ -2,65 +2,109 @@
   background: var(--sky-tint);
 }
 
-.grid {
+.panel {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+  padding: clamp(28px, 4vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+
+.times h2 {
+  margin-bottom: 12px;
+}
+
+.price {
+  color: var(--muted);
+  font-size: 1.125rem;
+  margin-bottom: 24px;
+}
+
+.times dl {
+  margin: 0 0 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.times dl div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.times dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.times dd {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.checklist {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(16px, 2.5vw, 24px);
+  gap: 0;
 }
 
-.grid li {
-  padding: 24px 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  background: var(--white);
-  box-shadow: var(--shadow-card);
-  transition: transform 0.15s ease;
+.checklist li {
+  padding-block: 18px;
+  border-bottom: 1px solid var(--line);
 }
 
-.grid li:hover {
-  transform: translateY(-3px);
+.checklist li:first-child {
+  padding-top: 4px;
 }
 
-.grid svg {
+.checklist li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.checklist li::before {
+  content: "✓";
+  display: inline-block;
   width: 26px;
   height: 26px;
+  line-height: 26px;
+  text-align: center;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: var(--sky-tint);
   color: var(--sky);
-  margin-bottom: 12px;
+  font-weight: 800;
 }
 
-.grid strong,
-.grid span {
-  display: block;
-}
-
-.grid strong {
-  font-size: 1.0625rem;
+.checklist strong {
   color: var(--navy);
-  line-height: 1.3;
 }
 
-.grid span {
-  margin-top: 6px;
-  font-size: 0.9375rem;
-  line-height: 1.55;
+.checklist span {
+  display: block;
+  margin: 4px 0 0 38px;
   color: var(--muted);
+  line-height: 1.55;
 }
 
-.grid a {
+.checklist a {
   color: var(--sky);
 }
 
 @media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 520px) {
-  .grid {
+  .panel {
     grid-template-columns: 1fr;
   }
 }
