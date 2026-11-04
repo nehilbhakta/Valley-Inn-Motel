@@ -76,6 +76,20 @@
 @media (max-width: 760px) {
   .bar {
     gap: 10px;
+    height: 64px;
+  }
+
+  .brand img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .name {
+    font-size: 1.125rem;
+  }
+
+  .area {
+    font-size: 0.8125rem;
   }
 
   .callText {

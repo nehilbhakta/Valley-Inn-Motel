@@ -25,7 +25,7 @@
 .field select {
   width: 100%;
   min-width: 0;
-  min-height: 50px;
+  min-height: 52px;
   padding: 10px 14px;
   border: 1.5px solid var(--line);
   border-radius: 12px;
@@ -67,6 +67,13 @@
 
 .error:empty {
   display: none;
+}
+
+.summary {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .note {
@@ -118,11 +125,14 @@
 
 @media (max-width: 760px) {
   .bar {
-    padding: 18px 16px 14px;
+    padding: 20px 16px 16px;
   }
 
+  /* Stack every field full-width on a phone: no more squeezed,
+     touching side-by-side date inputs */
   .fields {
-    gap: 12px 10px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
   }
 
   .field input[type="date"] {

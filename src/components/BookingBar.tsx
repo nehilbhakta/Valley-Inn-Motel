@@ -89,6 +89,12 @@ function AvailabilityBar({ motel, open }: { motel: Motel; open: NonNullable<Retu
       <p id="avail-error" className={styles.error} aria-live="polite">
         {error}
       </p>
+      {checkin && checkout && checkout > checkin ? (
+        <p className={styles.summary}>
+          {checkin} → {checkout} · {nights(checkin, checkout)} {nights(checkin, checkout) === 1 ? "night" : "nights"} · {guests}{" "}
+          {guests === 1 ? "guest" : "guests"}
+        </p>
+      ) : null}
       <p className={styles.note}>
         Book direct with no booking fees. Prefer to talk?{" "}
         <a href={`tel:${motel.phone.tel}`} onClick={() => track("phone_call_click", { location: "booking_bar" })}>
@@ -123,4 +129,10 @@ function CallOnlyBar({ motel }: { motel: Motel }) {
 
 function addDays(iso: string, days: number) {
   return localAddDays(iso, days);
+}
+
+function nights(checkin: string, checkout: string) {
+  return Math.round(
+    (new Date(`${checkout}T12:00:00`).getTime() - new Date(`${checkin}T12:00:00`).getTime()) / 86400000
+  );
 }

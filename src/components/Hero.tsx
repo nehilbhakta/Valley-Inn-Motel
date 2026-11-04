@@ -11,20 +11,21 @@ export function Hero({ motel }: { motel: Motel }) {
       <div className={styles.frame}>
         <HeroSlides photos={motel.heroPhotos} />
         <div className={`container ${styles.copy}`}>
+          {(() => {
+            const from = lowestPrice(motel);
+            return from !== null ? (
+              <span className={styles.pricePill}>Rooms from {formatPrice(from)}/night</span>
+            ) : null;
+          })()}
           <h1 id="hero-title">Clean rooms near downtown Phoenix</h1>
-          <p>Free parking right outside your door, free Wi-Fi, and a microwave and fridge in every room.</p>
+          <p>Free parking, free Wi-Fi, microwave &amp; fridge in every room.</p>
           <div className={styles.ctaRow}>
-            {(() => {
-              const from = lowestPrice(motel);
-              return from !== null ? (
-                <span className={styles.pricePill}>Rooms from {formatPrice(from)}/night</span>
-              ) : null;
-            })()}
             <a href="#rooms" className="btn btn-gold">
               See rooms
             </a>
             <a href={`tel:${motel.phone.tel}`} className="btn btn-outline btn-light">
-              <Phone aria-hidden /> Call {motel.phone.display}
+              <Phone aria-hidden /> <span className={styles.callFull}>Call {motel.phone.display}</span>
+              <span className={styles.callShort}>Call us</span>
             </a>
           </div>
         </div>

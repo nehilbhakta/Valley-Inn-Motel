@@ -87,12 +87,16 @@
 .pricePill {
   display: inline-flex;
   align-items: center;
-  padding: 10px 16px;
+  padding: 6px 12px;
   border-radius: 999px;
   background: var(--sun);
   color: var(--navy);
   font-weight: 800;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
+}
+
+.callShort {
+  display: none;
 }
 
 .copy p {
@@ -116,16 +120,47 @@
   }
 
   .frame {
-    height: clamp(420px, 62vh, 540px);
+    height: clamp(360px, 52vh, 460px);
     border-radius: 0;
   }
 
   .copy {
-    padding-bottom: 72px;
+    padding-bottom: 64px;
+  }
+
+  .copy h1 {
+    margin-top: 12px;
+    font-size: 2.125rem;
+    line-height: 1.08;
   }
 
   .copy p {
-    font-size: 1.0625rem;
+    margin-top: 10px;
+    font-size: 1rem;
+    hyphens: none;
+  }
+
+  /* Two equal buttons, no giant pill and no 3-row CTA stack */
+  .ctaRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .ctaRow a {
+    justify-content: center;
+    padding-inline: 12px;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+
+  .callFull {
+    display: none;
+  }
+
+  .callShort {
+    display: inline;
   }
 
   .barWrap {
