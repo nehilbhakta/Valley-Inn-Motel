@@ -1,0 +1,157 @@
+.dialog {
+  width: min(100% - 24px, 480px);
+  max-height: calc(100dvh - 24px);
+  padding: clamp(20px, 5vw, 28px);
+  border: 0;
+  border-top: 6px solid var(--sky);
+  border-radius: 20px;
+  color: var(--ink);
+  overflow: auto;
+}
+
+.dialog::backdrop {
+  background: rgba(12, 12, 40, 0.7);
+}
+
+.dialog h2 {
+  font-size: 1.75rem;
+  padding-right: 40px;
+}
+
+.close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--mist);
+  cursor: pointer;
+}
+
+.close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.intro {
+  margin: 8px 0 18px;
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  margin-top: 12px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.field em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 400;
+  font-size: 1rem;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.field input[type="date"] {
+  padding-inline: 8px;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(38, 38, 138, 0.18);
+}
+
+.field input[aria-invalid="true"] {
+  border-color: #c62828;
+}
+
+.error {
+  margin-top: 4px;
+  font-size: 0.875rem;
+  color: #c62828;
+}
+
+.error:empty {
+  display: none;
+}
+
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.done p {
+  margin-top: 12px;
+}
+
+.notice {
+  padding: 14px 16px;
+  background: #fdf3d8;
+  border-left: 5px solid var(--stucco-deep);
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.notice strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.notice a {
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--indigo);
+}
+
+.doneActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.doneActions :global(.btn-outline) {
+  color: var(--indigo);
+}

@@ -1,0 +1,199 @@
+/* Valley Inn design tokens: bright and airy.
+   White and Phoenix-sky blue, navy text, a touch of sun yellow. */
+:root {
+  --navy: #0f2a44;
+  --sky: #1769c9;
+  --sky-deep: #0f56a8;
+  --sky-tint: #eef5fc;
+  --sky-soft: #d9e9fa;
+  --sun: #f2b544;
+  --ink: #13243a;
+  --muted: #5a6b80;
+  --line: #dfe7f1;
+  --white: #ffffff;
+
+  /* Kept so older class names keep working */
+  --indigo: var(--sky);
+  --indigo-deep: var(--navy);
+  --gold: var(--sun);
+  --stucco: var(--sun);
+  --stucco-deep: #e0a12f;
+  --mist: var(--sky-tint);
+
+  --font-display: "Plus Jakarta Sans Variable", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans Variable", system-ui, sans-serif;
+
+  --fs-small: 0.9375rem;
+  --fs-body: 1.0625rem;
+  --fs-h3: 1.375rem;
+  --fs-h2: clamp(1.85rem, 3.4vw, 2.6rem);
+  --fs-h1: clamp(2.3rem, 5vw, 3.9rem);
+
+  --page: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --header-h: 76px;
+  --radius-photo: 16px;
+  --radius-card: 20px;
+  --shadow-card: 0 12px 40px rgba(15, 42, 68, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: var(--navy);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 800;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sun);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.container {
+  width: min(100% - 2 * var(--gutter), var(--page));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(64px, 9vw, 112px);
+}
+
+.section-intro {
+  max-width: 62ch;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.section-intro p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 1.125rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.btn-primary {
+  background: var(--indigo);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--sky-deep);
+}
+
+.btn-gold,
+.btn-white {
+  background: var(--white);
+  color: var(--sky-deep);
+}
+
+.btn-gold:hover,
+.btn-white:hover {
+  background: var(--sky-soft);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: currentColor;
+}
+
+.btn-outline:hover {
+  background: rgba(23, 105, 201, 0.08);
+}

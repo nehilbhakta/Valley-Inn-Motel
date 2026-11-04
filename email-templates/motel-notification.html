@@ -1,0 +1,24 @@
+<!-- EmailJS template: new booking alert for the front desk
+     Subject:   New booking request: {{guest_name}}, {{room_type}}, {{checkin}}
+     To Email:  valleyinndowntownphoenix@gmail.com
+     From Name: Valley Inn website
+     Reply To:  {{guest_email}}      <- so you can reply straight to the guest
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial,Helvetica,sans-serif;color:#15162b;">
+  <tr>
+    <td style="padding:20px;">
+      <p style="margin:0 0 6px;font-size:20px;font-weight:bold;">New booking request from the website</p>
+      <p style="margin:0 0 18px;font-size:15px;color:#555870;">Not confirmed yet. The guest was emailed the details and asked to call the front desk to confirm; until then it's subject to availability. Reply to this email to contact them.</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:15px;border-collapse:collapse;">
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Name</td><td style="padding:6px 0;font-weight:bold;">{{guest_name}}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Email</td><td style="padding:6px 0;font-weight:bold;">{{guest_email}}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Phone</td><td style="padding:6px 0;font-weight:bold;">{{guest_phone}}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Room</td><td style="padding:6px 0;font-weight:bold;">{{room_type}}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Guests</td><td style="padding:6px 0;font-weight:bold;">{{guests}}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Check-in</td><td style="padding:6px 0;font-weight:bold;">{{checkin}}</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Check-out</td><td style="padding:6px 0;font-weight:bold;">{{checkout}} ({{nights}} nights)</td></tr>
+        <tr><td style="padding:6px 16px 6px 0;color:#555870;">Requests</td><td style="padding:6px 0;font-weight:bold;">{{special_requests}}</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>

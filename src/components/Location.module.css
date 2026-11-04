@@ -1,0 +1,78 @@
+.location {
+  background: var(--white);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: stretch;
+}
+
+.address {
+  margin-top: 14px;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.lead {
+  margin-top: 18px;
+  color: var(--muted);
+}
+
+.nearby {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 20px;
+}
+
+.nearby li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.nearby svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  color: var(--indigo);
+}
+
+.directions {
+  margin-top: 28px;
+}
+
+.map {
+  min-height: 380px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  background: var(--line);
+}
+
+.map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border: 0;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .nearby {
+    grid-template-columns: 1fr;
+  }
+}
