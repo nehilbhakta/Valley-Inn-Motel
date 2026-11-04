@@ -65,11 +65,12 @@
 }
 
 .field input,
-.field select {
+.field select,
+.dateDisplay {
   width: 100%;
   min-width: 0;
-  min-height: 46px;
-  padding: 10px 12px;
+  min-height: 56px;
+  padding: 14px 16px;
   border: 1.5px solid var(--line);
   border-radius: 12px;
   font: inherit;
@@ -79,8 +80,48 @@
   color: var(--ink);
 }
 
-.field input[type="date"] {
-  padding-inline: 8px;
+/* Same pattern as the booking bar: the visible date row is our own
+   left-aligned text with a calendar icon, so iOS cannot centre it or
+   size it differently from the other fields. The native date input is
+   invisible over the whole row, so tapping it still opens the phone's
+   own date picker. On a phone the two date rows stack full-width, like
+   Room and Guests above them, instead of squeezing side by side. */
+.dateWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.dateDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.dateDisplay svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+}
+
+.dateInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dateWrap:focus-within .dateDisplay {
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(38, 38, 138, 0.18);
 }
 
 .field input:focus,

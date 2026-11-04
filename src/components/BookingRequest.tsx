@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { Phone, X } from "lucide-react";
+import { Calendar, Phone, X } from "lucide-react";
 import type { Motel } from "@/data/types";
-import { formatPrice, localToday } from "@/lib/site";
+import { formatPrice, localAddDays, localToday } from "@/lib/site";
 import { track } from "@/lib/analytics";
 import styles from "./BookingRequest.module.css";
 
@@ -47,12 +47,18 @@ type Errors = Partial<Record<"name" | "email" | "dates" | "form", string>>;
 function RequestDialog({ motel, prefill, onClose }: { motel: Motel; prefill: BookingPrefill; onClose: () => void }) {
   const ref = useRef<HTMLDialogElement>(null);
   const [roomId, setRoomId] = useState(prefill.roomId!);
+  // Controlled dates: default to tonight/tomorrow, and checkout always
+  // follows check-in, so the dialog can never show the same date twice.
+  const today = localToday();
+  const [checkin, setCheckin] = useState(prefill.checkin ?? today);
+  const [checkout, setCheckout] = useState(
+    prefill.checkout && prefill.checkout > (prefill.checkin ?? today) ? prefill.checkout : localAddDays(prefill.checkin ?? today, 1)
+  );
   const maxGuests = motel.rooms.find((r) => r.id === roomId)?.sleeps ?? 2;
   const [errors, setErrors] = useState<Errors>({});
   const [sending, setSending] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [prepared, setPrepared] = useState<Record<string, string> | null>(null);
-  const today = localToday();
 
   useEffect(() => {
     ref.current?.showModal();
@@ -215,16 +221,53 @@ function RequestDialog({ motel, prefill, onClose }: { motel: Motel; prefill: Boo
             </select>
           </label>
 
-          <div className={styles.row}>
-            <label className={styles.field}>
-              <span>Check-in</span>
-              <input type="date" name="checkin" min={today} defaultValue={prefill.checkin} aria-invalid={!!errors.dates} aria-describedby="err-dates" onChange={() => clear("dates")} />
-            </label>
-            <label className={styles.field}>
-              <span>Check-out</span>
-              <input type="date" name="checkout" min={today} defaultValue={prefill.checkout} aria-invalid={!!errors.dates} aria-describedby="err-dates" onChange={() => clear("dates")} />
-            </label>
-          </div>
+          <label className={styles.field}>
+            <span>Check-in</span>
+            <span className={styles.dateWrap}>
+              <span className={styles.dateDisplay} aria-hidden="true">
+                {formatDate(checkin)}
+                <Calendar aria-hidden="true" />
+              </span>
+              <input
+                className={styles.dateInput}
+                type="date"
+                name="checkin"
+                min={today}
+                value={checkin}
+                aria-label="Check-in date"
+                aria-invalid={!!errors.dates}
+                aria-describedby="err-dates"
+                onChange={(e) => {
+                  setCheckin(e.target.value);
+                  if (e.target.value && (!checkout || checkout <= e.target.value)) setCheckout(localAddDays(e.target.value, 1));
+                  clear("dates");
+                }}
+              />
+            </span>
+          </label>
+          <label className={styles.field}>
+            <span>Check-out</span>
+            <span className={styles.dateWrap}>
+              <span className={styles.dateDisplay} aria-hidden="true">
+                {formatDate(checkout)}
+                <Calendar aria-hidden="true" />
+              </span>
+              <input
+                className={styles.dateInput}
+                type="date"
+                name="checkout"
+                min={localAddDays(checkin, 1)}
+                value={checkout}
+                aria-label="Check-out date"
+                aria-invalid={!!errors.dates}
+                aria-describedby="err-dates"
+                onChange={(e) => {
+                  setCheckout(e.target.value);
+                  clear("dates");
+                }}
+              />
+            </span>
+          </label>
           <p id="err-dates" className={styles.error}>{errors.dates}</p>
 
           <label className={styles.field}>
@@ -267,6 +310,13 @@ function RequestDialog({ motel, prefill, onClose }: { motel: Motel; prefill: Boo
       )}
     </dialog>
   );
+}
+
+// "2026-11-04" -> "Nov 4, 2026" for the on-screen date rows (calendar parts, no timezone shift)
+function formatDate(iso: string) {
+  if (!iso) return "Choose a date";
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 // "2026-12-10" -> "Thu, Dec 10, 2026" for the emails
